@@ -10,13 +10,17 @@
       </ul>
     </div>
   <% end %>
+  <table>
+    <tr>
+      <th style="text-align: left;"> <%= form.label :name %></th>
+      <td> <%= form.text_field :name %></td>
+    </tr>
+    <tr>
+      <th style="text-align: left;"> </th>
+      <td> <%= form.submit %></td>
+    </tr>
+  </table>
+ 
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  
 <% end %>

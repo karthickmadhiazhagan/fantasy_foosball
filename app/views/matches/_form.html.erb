@@ -10,13 +10,15 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label :winning_team_id %>
-    <%= form.number_field :winning_team_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+   <table>
+    <tr>
+      <th style="text-align: left;"> <%= form.label :winning_team_id %></th>
+      <td> <%= form.select :winning_team_id, team_array, :include_blank => true %></td></td>
+    </tr>
+    <tr>
+      <th style="text-align: left;"> </th>
+      <td> <%= form.submit %></td>
+    </tr>
+  </table>
+  
 <% end %>

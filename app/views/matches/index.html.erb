@@ -1,8 +1,31 @@
 <p id="notice"><%= notice %></p>
+<style type="text/css">
+  #players {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
 
+#players td, #players th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#players tr:nth-child(even){background-color: #f2f2f2;}
+
+#players tr:hover {background-color: #ddd;}
+
+#players th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
 <h1>Matches</h1>
-
-<table>
+<p style="float: right;"><%= link_to 'New Match', new_match_path %></p>
+<table id="players">
   <thead>
     <tr>
       <th>Winning team</th>
@@ -24,4 +47,3 @@
 
 <br>
 
-<%= link_to 'New Match', new_match_path %>

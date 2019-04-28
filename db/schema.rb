@@ -10,10 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_28_124809) do
+ActiveRecord::Schema.define(version: 2019_04_28_131447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "game_scores", force: :cascade do |t|
+    t.bigint "team_id"
+    t.bigint "game_id"
+    t.integer "score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_game_scores_on_game_id"
+    t.index ["team_id"], name: "index_game_scores_on_team_id"
+  end
+
+  create_table "games", force: :cascade do |t|
+    t.bigint "match_id"
+    t.integer "winning_team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_games_on_match_id"
+  end
+
+  create_table "match_teams", force: :cascade do |t|
+    t.bigint "team_id"
+    t.bigint "match_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_match_teams_on_match_id"
+    t.index ["team_id"], name: "index_match_teams_on_team_id"
+  end
 
   create_table "matches", force: :cascade do |t|
     t.integer "winning_team_id"
@@ -36,5 +63,10 @@ ActiveRecord::Schema.define(version: 2019_04_28_124809) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "game_scores", "games"
+  add_foreign_key "game_scores", "teams"
+  add_foreign_key "games", "matches"
+  add_foreign_key "match_teams", "matches"
+  add_foreign_key "match_teams", "teams"
   add_foreign_key "players", "teams"
 end

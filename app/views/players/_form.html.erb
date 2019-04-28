@@ -11,22 +11,24 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :firstname %>
-    <%= form.text_field :firstname %>
-  </div>
+  <table>
+    <tr>
+      <th style="text-align: left;"> <%= form.label :firstname %></th>
+      <td> <%= form.text_field :firstname %></td>
+    </tr>
+    <tr>
+      <th style="text-align: left;"> <%= form.label :lastname %></th>
+      <td> <%= form.text_field :lastname %></td>
+    </tr>
+    <tr>
+      <th style="text-align: left;"> <%= form.label :team_id %></th>
+      <td> <%= form.select :team_id, team_array, :include_blank => true %></td>
+    </tr>
+    <tr>
+      <th></th>
+      <td> <%= form.submit %></td>
+    </tr>
 
-  <div class="field">
-    <%= form.label :lastname %>
-    <%= form.text_field :lastname %>
-  </div>
-
-  <div class="field">
-    <%= form.label :team_id %>
-    <%= form.text_field :team_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  </table>
+  
 <% end %>
