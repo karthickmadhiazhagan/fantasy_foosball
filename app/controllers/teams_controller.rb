@@ -4,6 +4,7 @@ class TeamsController < ApplicationController
   # GET /teams
   # GET /teams.json
   def index
+    get_team_rankings
     @teams = Team.all
   end
 
@@ -58,6 +59,22 @@ class TeamsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to teams_url, notice: 'Team was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def get_team_rankings
+    sql_str = " select am.team_id, (COALESCE(wm.winning_matches,0)/COALESCE(am.total_matches, 0) ) as winning_percentage, RANK () OVER (
+       ORDER BY
+       (COALESCE(wm.winning_matches,0)/COALESCE(am.total_matches, 0) ) desc
+       ) as team_rank from 
+       (select team_id, count(match_id) as total_matches from match_teams group by team_id) am
+       left join 
+       (select winning_team_id, count(id) as winning_matches from matches group by winning_team_id) wm
+       on am.team_id = wm.winning_team_id"
+    @team_ranks = Hash.new
+    team_rank_data = Team.find_by_sql(sql_str)
+    team_rank_data.each do |rank_data|
+      @team_ranks[rank_data.team_id] = {'winning_percentage' => (rank_data.winning_percentage*100).round(2), 'team_rank' => rank_data.team_rank}
     end
   end
 
