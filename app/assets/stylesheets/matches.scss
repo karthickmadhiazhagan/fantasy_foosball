@@ -1,3 +1,11 @@
 // Place all the styles related to the Matches controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.tbl-report{
+			width : 200px;
+			table-layout: fixed;
+			word-wrap: break-word;
+			text-align: center; 
+			margin-top:5px; margin-bottom:10px; padding-left: 10px; color:#333333;
+			font-family:Verdana, sans-serif; font-size:12px; 
+		}

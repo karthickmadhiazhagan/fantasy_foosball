@@ -10,6 +10,7 @@ class MatchesController < ApplicationController
   # GET /matches/1
   # GET /matches/1.json
   def show
+    @games = @match.games
   end
 
   # GET /matches/new
@@ -30,7 +31,7 @@ class MatchesController < ApplicationController
     @match = Match.new(match_params)
     respond_to do |format|
       if @match.save
-        create_match_teams(home_team,away_team)
+        create_match_teams_games(home_team,away_team)
         format.html { redirect_to @match, notice: 'Match was successfully created.' }
         format.json { render :show, status: :created, location: @match }
       else
@@ -40,9 +41,17 @@ class MatchesController < ApplicationController
     end
   end
 
-  def create_match_teams(home_team, away_team)
+  # create games and match team deatils at the time of match creation
+  def create_match_teams_games(home_team, away_team)
     MatchTeam.create(:team_id => home_team, :match_id => @match.id)
     MatchTeam.create(:team_id => away_team, :match_id => @match.id)
+    # Creating 3 games
+    (1 .. 3).each do |index|
+      game = Game.create(:match_id => @match.id)
+      GameScore.create(:team_id => home_team, :game_id => game.id)
+      GameScore.create(:team_id => away_team, :game_id => game.id)
+    end
+
   end
 
   # PATCH/PUT /matches/1

@@ -5,8 +5,26 @@
 </p>
 <p>
   <strong>Winning team:</strong>
-  <%= @match.winning_team.name %>
+  <%= @match.winning_team.try(:name) %>
 </p>
 
+<table class = 'tbl-report', border="1" style="border-collapse:collapse;" cellspacing="0",frame="box">
+	<head style="text-align: center;"><b><%= t(:label_games) %></b></head>
+  <% @games.each_with_index do |game, index| %>
+    <tr>
+     <th style="text-align: center;"><%= "Game#{index+1}" %></th>
+    </tr>
+    <% game.game_scores.each do |game_score| %>
+	    <tr>
+	      <th style="text-align: left;"><%= game_score.team.try(:name) %></th>
+	      <td> <%= game_score.score %></td>
+	    </tr>
+	<% end %>
+	<tr>
+      <th style="text-align: left;"><%= "Winning team:" %></th>
+      <td> <%= game.winning_team.try(:name) %></td>
+    </tr>
+  <% end %>
+</table>
 <%= link_to 'Edit', edit_match_path(@match) %> |
 <%= link_to 'Back', matches_path %>
