@@ -3,7 +3,7 @@ class CreatePlayers < ActiveRecord::Migration[5.2]
     create_table :players do |t|
       t.string :firstname
       t.string :lastname
-      t.references :team, foreign_key: true
+      t.references :team, foreign_key: true, :null => true, :default => nil
 
       t.timestamps
     end
