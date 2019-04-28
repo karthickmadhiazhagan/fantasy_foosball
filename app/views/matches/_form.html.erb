@@ -11,14 +11,34 @@
     </div>
   <% end %>
    <table>
-    <tr>
-      <th style="text-align: left;"> <%= form.label :winning_team_id %></th>
-      <td> <%= form.select :winning_team_id, team_array, :include_blank => true %></td></td>
-    </tr>
+      <% if match.new_record? || match.id.blank? %>
+        <tr>
+         <td><%=h select_tag('home_team', options_for_select(team_array) ) %></td>
+        </tr>
+        <th style="text-align: center;"> <%= "VS" %></th>
+        <tr>
+          <td> <%=h select_tag('away_team', options_for_select(team_array) ) %></td>
+        </tr>
+        <%= form.hidden_field :winning_team_id %>
+        <%= hidden_field_tag 'selected', 'none'  %>
+      <% else %>
+ 
+        <% match.match_teams.each_with_index do |match_team, index| %>
+          <%= form.fields_for match_team, index: match_team.id do |match_team_form|%>
+            <td> <%= match_team_form.select :team_id, team_array, :include_blank => true %></td>
+          <% end %> 
+          <% if index == 0 %>
+             <th style="text-align: center;"> <%= "VS" %></th>
+          <% end %> 
+        <% end %>
+        <tr>
+          <th style="text-align: left;"> <%= form.label :winning_team_id %></th>
+          <td> <%= form.select :winning_team_id, team_array, :include_blank => true %></td>
+        </tr>
+      <% end %>
     <tr>
       <th style="text-align: left;"> </th>
       <td> <%= form.submit %></td>
     </tr>
   </table>
-  
 <% end %>

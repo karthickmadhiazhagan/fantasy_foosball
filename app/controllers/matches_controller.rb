@@ -4,7 +4,7 @@ class MatchesController < ApplicationController
   # GET /matches
   # GET /matches.json
   def index
-    @matches = Match.all
+    @matches = Match.includes(:winning_team).all
   end
 
   # GET /matches/1
@@ -15,6 +15,7 @@ class MatchesController < ApplicationController
   # GET /matches/new
   def new
     @match = Match.new
+    #@match.match_teams.build(2) # = [MatchTeam.new(@match), MatchTeam.new(@match)]
   end
 
   # GET /matches/1/edit
@@ -24,10 +25,12 @@ class MatchesController < ApplicationController
   # POST /matches
   # POST /matches.json
   def create
+    home_team = params[:home_team]
+    away_team = params[:away_team]
     @match = Match.new(match_params)
-
     respond_to do |format|
       if @match.save
+        create_match_teams(home_team,away_team)
         format.html { redirect_to @match, notice: 'Match was successfully created.' }
         format.json { render :show, status: :created, location: @match }
       else
@@ -35,6 +38,11 @@ class MatchesController < ApplicationController
         format.json { render json: @match.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def create_match_teams(home_team, away_team)
+    MatchTeam.create(:team_id => home_team, :match_id => @match.id)
+    MatchTeam.create(:team_id => away_team, :match_id => @match.id)
   end
 
   # PATCH/PUT /matches/1

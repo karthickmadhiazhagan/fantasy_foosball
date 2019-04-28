@@ -23,7 +23,7 @@
   color: white;
 }
 </style>
-<h1>Players</h1>
+<h1><%= t(:label_players) %></h1>
 <p style="float: right;"><%= link_to 'New Player', new_player_path %></p>
 <table id="players">
   <thead>
@@ -40,7 +40,7 @@
       <tr>
         <td><%= player.firstname %></td>
         <td><%= player.lastname %></td>
-        <td><%= player.team %></td>
+        <td><%= player.team.try(:name) %></td>
         <td><%= link_to 'Show', player %></td>
         <td><%= link_to 'Edit', edit_player_path(player) %></td>
         <td><%= link_to 'Destroy', player, method: :delete, data: { confirm: 'Are you sure?' } %></td>

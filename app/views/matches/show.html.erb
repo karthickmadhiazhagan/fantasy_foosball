@@ -1,8 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong><%= @match.match_name %></strong>
+</p>
+<p>
   <strong>Winning team:</strong>
-  <%= @match.winning_team_id %>
+  <%= @match.winning_team.name %>
 </p>
 
 <%= link_to 'Edit', edit_match_path(@match) %> |
