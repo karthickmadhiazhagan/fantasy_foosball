@@ -17,6 +17,7 @@ class MatchesController < ApplicationController
   def new
     @match = Match.new
     #@match.match_teams.build(2) # = [MatchTeam.new(@match), MatchTeam.new(@match)]
+    2.times { @match.match_teams.build }
   end
 
   # GET /matches/1/edit
@@ -26,12 +27,9 @@ class MatchesController < ApplicationController
   # POST /matches
   # POST /matches.json
   def create
-    home_team = params[:home_team]
-    away_team = params[:away_team]
     @match = Match.new(match_params)
     respond_to do |format|
       if @match.save
-        create_match_teams_games(home_team,away_team)
         format.html { redirect_to @match, notice: 'Match was successfully created.' }
         format.json { render :show, status: :created, location: @match }
       else
@@ -41,18 +39,7 @@ class MatchesController < ApplicationController
     end
   end
 
-  # create games and match team deatils at the time of match creation
-  def create_match_teams_games(home_team, away_team)
-    MatchTeam.create(:team_id => home_team, :match_id => @match.id)
-    MatchTeam.create(:team_id => away_team, :match_id => @match.id)
-    # Creating 3 games
-    (1 .. 3).each do |index|
-      game = Game.create(:match_id => @match.id)
-      GameScore.create(:team_id => home_team, :game_id => game.id)
-      GameScore.create(:team_id => away_team, :game_id => game.id)
-    end
-
-  end
+  # end
 
   # PATCH/PUT /matches/1
   # PATCH/PUT /matches/1.json
@@ -86,6 +73,6 @@ class MatchesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def match_params
-      params.require(:match).permit(:winning_team_id)
+      params.require(:match).permit(:winning_team_id, :match_teams_attributes => [:id, :team_id])
     end
 end
