@@ -6,4 +6,5 @@ class Team < ApplicationRecord
 	has_many :winning_games, :class_name => 'Game', :foreign_key => 'winning_team_id', :dependent => :restrict_with_error
 	has_many :game_scores
 	has_many :games, :through => :game_scores
+	validates_presence_of :name
 end
