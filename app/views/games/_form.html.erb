@@ -1,0 +1,33 @@
+<%= form_with(model: game, local: true) do |form| %>
+  <% if game.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(game.errors.count, "error") %> prohibited this game from being saved:</h2>
+
+      <ul>
+      <% game.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+   <table>
+
+        <%# game.game_scores.each_with_index do |game_score_attributes, index| %>
+          <%= form.fields_for :game_scores do |game_score_form|%>
+            <tr>
+              <th style="text-align: left;"> <%#= game_score.team.try(:name) %></th>
+              <td> <%= game_score_form.select :team_id, team_array, :include_blank => true %></td>
+              <td> <%= game_score_form.number_field :score, :min => 0, :max => 5 %></td>
+            </tr>
+          <% end %>
+        <%# end %>
+        <tr>
+          <th style="text-align: left;"> <%= form.label :winning_team_id %></th>
+          <td> <%= form.select :winning_team_id, team_array, :include_blank => true %></td>
+        </tr>
+    <tr>
+      <th style="text-align: left;"> </th>
+      <td> <%= form.submit %></td>
+    </tr>
+  </table>
+<% end %>

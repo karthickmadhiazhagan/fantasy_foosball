@@ -39,8 +39,8 @@
     <% @teams.each do |team| %>
       <tr>
         <td><%= team.name %></td>
-        <td><%= @team_ranks[team.id]['winning_percentage'] %></td>
-        <td><%= @team_ranks[team.id]['team_rank'] %></td>
+        <td><%= @team_ranks[team.id]['winning_percentage'] unless @team_ranks[team.id].blank? %></td>
+        <td><%= @team_ranks[team.id]['team_rank'] unless @team_ranks[team.id].blank? %></td>
         <td><%= link_to 'Show', team %></td>
         <td><%= link_to 'Edit', edit_team_path(team) %></td>
         <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } %></td>

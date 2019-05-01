@@ -13,6 +13,7 @@
   <% @games.each_with_index do |game, index| %>
     <tr>
      <th style="text-align: center;"><%= "Game#{index+1}" %></th>
+     <td><%= link_to 'Start', edit_match_game_path(@match,game) %></td>
     </tr>
     <% game.game_scores.each do |game_score| %>
 	    <tr>
