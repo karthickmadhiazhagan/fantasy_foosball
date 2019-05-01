@@ -14,7 +14,7 @@
          <% is_first_team = true %>
          <%= form.fields_for :match_teams do |match_teams_form|%>
             <tr style="text-align: center;">
-             
+
               <td style="text-align: center;"> <%= match_teams_form.select :team_id, team_array, :include_blank => true %></td>
             </tr>
             <% if is_first_team %>
@@ -23,12 +23,13 @@
             <% end %>
           <% end %>
         <tr>
-          <th style="text-align: left;"> <%= form.label :winning_team_id %></th>
-          <td> <%= form.select :winning_team_id, team_array, :include_blank => true %></td>
+          <%= form.hidden_field :winning_team_id %>
+          <%= hidden_field_tag 'selected', 'none'  %>
         </tr>
-    <tr>
-      <th style="text-align: left;"> </th>
-      <td> <%= form.submit %></td>
-    </tr>
+        <tr></tr>
+        <tr>
+          <td> <%= form.submit %></td>
+        </tr>
+        <tr></tr>
   </table>
 <% end %>

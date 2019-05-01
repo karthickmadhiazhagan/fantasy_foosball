@@ -7,6 +7,7 @@ class Game < ApplicationRecord
   before_create :create_game_scores
   before_save :set_winning_team
   validate :validate_scores
+  after_save :set_match_winning_team, if: :winning_team_id?
 
   def create_game_scores
   	self.match.match_teams.each do |match_team|
@@ -27,5 +28,9 @@ class Game < ApplicationRecord
 
   def max_score_team
   	self.game_scores.select { |g_score| g_score.team_id if g_score.score == 5 }
+  end
+
+  def set_match_winning_team
+	self.match.save(:winning_team_id => self.winning_team_id)
   end
 end

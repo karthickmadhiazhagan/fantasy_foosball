@@ -22,8 +22,8 @@
           <% end %>
         <%# end %>
         <tr>
-          <th style="text-align: left;"> <%= form.label :winning_team_id %></th>
-          <td> <%= form.select :winning_team_id, team_array, :include_blank => true %></td>
+          <%= form.hidden_field :winning_team_id %>
+          <%= hidden_field_tag 'selected', 'none'  %>
         </tr>
     <tr>
       <th style="text-align: left;"> </th>
